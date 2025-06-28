@@ -29,4 +29,10 @@ return {
   -- -- Notes
   { import = "astrocommunity.pack.typst" },
   { import = "astrocommunity.markdown-and-latex.peek-nvim" },
+
+  -- Code Runner
+  { import = "astrocommunity.code-runner.compiler-nvim" },
+  -- { import = "astrocommunity.code-runner.molten-nvim" },
+  -- { import = "astrocommunity.code-runner.executor-nvim" },
+  -- { import = "astrocommunity.code-runner.sniprun" }, -- in ./plugins/sniprun.lua
 }

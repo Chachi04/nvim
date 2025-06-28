@@ -89,6 +89,29 @@ return {
 
         -- setting a mapping to false will disable it
         -- ["<C-S>"] = false,
+
+        -- Compiler.nvim
+        ["<Leader>rf"] = {
+          "<cmd>CompilerOpen<CR>",
+          desc = "Run file (Compiler.nvim)",
+        },
+        ["<Leader>rr"] = {
+          "<cmd>CompilerRedo<CR>",
+          desc = "Rerun compiler",
+        },
+        ["<Leader>rR"] = {
+          "<cmd>CompilerStop<CR>" -- (Optional, to dispose all tasks before redo)
+            .. "<cmd>CompilerRedo<CR>",
+          desc = "Fresh rerun compiler",
+        },
+        ["<Leader>rt"] = {
+          "<cmd>CompilerToggleResults<CR>",
+          desc = "Show compiler results",
+        },
+        ["<Leader>rs"] = {
+          "<cmd>SnipRun<CR>",
+          desc = "Run SnipRun",
+        },
       },
       i = {
         -- NOTE better undo breaks
