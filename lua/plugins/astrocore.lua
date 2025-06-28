@@ -43,11 +43,16 @@ return {
         spell = false, -- sets vim.opt.spell
         signcolumn = "yes", -- sets vim.opt.signcolumn to yes
         wrap = false, -- sets vim.opt.wrap
+
+        wildignorecase = true,
+        swapfile = false,
+        scrolloff = 10,
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
         -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
         -- This can be found in the `lua/lazy_setup.lua` file
+        python3_host_prog = vim.fn.expand "$CONDA_PREFIX/bin/python",
       },
     },
     -- Mappings can be configured through AstroCore as well.
