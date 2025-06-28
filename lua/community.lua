@@ -28,4 +28,5 @@ return {
   -- Notes
   -- -- Notes
   { import = "astrocommunity.pack.typst" },
+  { import = "astrocommunity.markdown-and-latex.peek-nvim" },
 }

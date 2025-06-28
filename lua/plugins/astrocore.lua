@@ -108,5 +108,30 @@ return {
         ["<A-j>"] = { ":m '>+1<CR><CR>gv=gv" },
       },
     },
+      markdown_settings = {
+        {
+          event = "BufEnter",
+          pattern = "*.md",
+          desc = "markdown settings",
+          callback = function()
+            vim.opt.tabstop = 2
+            vim.opt.softtabstop = 2
+            vim.opt.shiftwidth = 2
+
+            vim.b.peek_open = false
+
+            local toggle_peek = function()
+              if not vim.b.peek_open then
+                require("peek").open()
+              else
+                require("peek").close()
+              end
+              vim.b.peek_open = not vim.b.peek_open
+            end
+
+            vim.keymap.set("n", "<f3>", toggle_peek, { noremap = true, silent = true, buffer = true })
+          end,
+        },
+      },
   },
 }
