@@ -66,7 +66,7 @@ return {
         -- specify a list of rules to add
         Rule(" ", " "):with_pair(function(options)
           local pair = options.line:sub(options.col - 1, options.col)
-          return vim.tbl_contains({ "()", "[]", "{}" }, pair)
+          return vim.tbl_contains({ "()", "[]", "{}", "$$" }, pair)
         end),
         Rule("( ", " )")
           :with_pair(function() return false end)
@@ -80,26 +80,31 @@ return {
           :with_pair(function() return false end)
           :with_move(function(options) return options.prev_char:match ".%]" ~= nil end)
           :use_key "]",
+        Rule("$ ", " $")
+          :with_pair(function() return false end)
+          :with_move(function(options) return options.prev_char:match ".%$" ~= nil end)
+          :use_key "$",
       }
-      npairs.add_rules(
-        {
-          Rule("$", "$", { "tex", "latex" })
-            -- don't add a pair if the next character is %
-            :with_pair(cond.not_after_regex "%%")
-            -- don't add a pair if  the previous character is xxx
-            :with_pair(
-              cond.not_before_regex("xxx", 3)
-            )
-            -- don't move right when repeat character
-            :with_move(cond.none())
-            -- don't delete if the next character is xx
-            :with_del(cond.not_after_regex "xx")
-            -- disable adding a newline when you press <cr>
-            :with_cr(cond.none()),
-        },
-        -- disable for .vim files, but it work for another filetypes
-        Rule("a", "a", "-vim")
-      )
+
+      npairs.add_rules {
+        Rule("$", "$", { "typst" }):with_move():use_key "$",
+        Rule("_", "_", { "typst" })
+          :with_pair(function(options)
+            local line = options.line
+            local col = options.col
+            return col == 1 or line:sub(col - 1, col - 1):match "%s" ~= nil
+          end)
+          :with_move()
+          :use_key "_",
+        Rule("*", "*", { "typst" })
+          :with_pair(function(options)
+            local line = options.line
+            local col = options.col
+            return col == 1 or line:sub(col - 1, col - 1):match "%s" ~= nil
+          end)
+          :with_move()
+          :use_key "$",
+      }
     end,
   },
 }
