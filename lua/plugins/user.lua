@@ -62,6 +62,25 @@ return {
       local npairs = require "nvim-autopairs"
       local Rule = require "nvim-autopairs.rule"
       local cond = require "nvim-autopairs.conds"
+      npairs.add_rules {
+        -- specify a list of rules to add
+        Rule(" ", " "):with_pair(function(options)
+          local pair = options.line:sub(options.col - 1, options.col)
+          return vim.tbl_contains({ "()", "[]", "{}" }, pair)
+        end),
+        Rule("( ", " )")
+          :with_pair(function() return false end)
+          :with_move(function(options) return options.prev_char:match ".%)" ~= nil end)
+          :use_key ")",
+        Rule("{ ", " }")
+          :with_pair(function() return false end)
+          :with_move(function(options) return options.prev_char:match ".%}" ~= nil end)
+          :use_key "}",
+        Rule("[ ", " ]")
+          :with_pair(function() return false end)
+          :with_move(function(options) return options.prev_char:match ".%]" ~= nil end)
+          :use_key "]",
+      }
       npairs.add_rules(
         {
           Rule("$", "$", { "tex", "latex" })
