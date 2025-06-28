@@ -61,6 +61,13 @@ return {
         ["]b"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
         ["[b"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
 
+        -- make cursor stay when concattinating with J
+        J = { "mzJ`z" },
+
+        -- Line Swapping
+        ["<A-j>"] = { "<cmd>m .+1<CR>==" },
+        ["<A-k>"] = { "<cmd>m .-2<CR>==" },
+
         -- mappings seen under group name "Buffer"
         ["<Leader>bd"] = {
           function()
@@ -77,6 +84,23 @@ return {
 
         -- setting a mapping to false will disable it
         -- ["<C-S>"] = false,
+      },
+      i = {
+        -- NOTE better undo breaks
+        ["<Space>"] = { "<Space><C-g>u" },
+        [","] = { ",<C-g>u" },
+        ["."] = { ".<C-g>u" },
+        ["!"] = { "!<C-g>u" },
+        ["?"] = { "?<C-g>u" },
+
+        -- Line Swapping
+        ["<A-j>"] = { "<Esc><cmd>m .+1<CR>==gi" },
+        ["<A-k>"] = { "<Esc><cmd>m .-2<CR>==gi" },
+      },
+      v = {
+        -- Line Swapping
+        ["<A-k>"] = { ":m '<-2<CR><CR>gv=gv" },
+        ["<A-j>"] = { ":m '>+1<CR><CR>gv=gv" },
       },
     },
   },
