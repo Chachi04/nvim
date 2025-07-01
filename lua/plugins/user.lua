@@ -38,6 +38,13 @@ return {
         },
       },
     },
+    keys = {
+      { "<leader><space>", function() require("snacks").picker.smart() end, desc = "Smart Find Files" },
+      { "<C-p>", function() require("snacks").picker.smart() end, desc = "Smart Find Files" },
+      { "<Leader>.", function() require("snacks").scratch() end, desc = "Toggle Scratch Buffer" },
+      { "<Leader>f.", function() require("snacks").scratch.select() end, desc = "Toggle Scratch Buffer" },
+      { "<Leader>gg", function() require("snacks").lazygit.open() end, desc = "ToggleTerm LazyGit" },
+    },
   },
 
   -- You can disable default plugins as follows:
