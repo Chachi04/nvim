@@ -70,6 +70,9 @@ return {
         Rule(" ", " "):with_pair(function(options)
           local pair = options.line:sub(options.col - 1, options.col)
           return vim.tbl_contains({ "()", "[]", "{}", "$$" }, pair)
+        end):with_del(function(options)
+          local pair = options.line:sub(options.col - 1, options.col)
+          return vim.tbl_contains({ "()", "[]", "{}", "$$" }, pair)
         end),
         Rule("( ", " )")
           :with_pair(function() return false end)
@@ -90,6 +93,8 @@ return {
       }
 
       npairs.add_rules {
+        Rule("(", ")", { "typst" }):with_pair(cond.after_text "$"),
+        Rule('"', '"', { "typst" }):with_pair(cond.after_text "$"),
         Rule("$", "$", { "typst" }):with_move():use_key "$",
         Rule("_", "_", { "typst" })
           :with_pair(function(options)
@@ -106,7 +111,7 @@ return {
             return col == 1 or line:sub(col - 1, col - 1):match "%s" ~= nil
           end)
           :with_move()
-          :use_key "$",
+          :use_key "*",
       }
     end,
   },
