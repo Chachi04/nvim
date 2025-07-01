@@ -134,6 +134,92 @@ return {
         ["<C-c>"] = { "<Esc>" },
       },
     },
+    autocmds = {
+      typst_settings = {
+        {
+          event = "BufEnter",
+          pattern = "*.typ",
+          desc = "set keymaps for typst files",
+          callback = function()
+            vim.keymap.set("n", "<f3>", "<cmd>TypstPreviewToggle<cr>", { noremap = true, silent = true })
+            vim.b.watch_typst = false
+            local toggle_watch_typst = function()
+              vim.b.watch_typst = not vim.b.watch_typst
+              if vim.b.watch_typst then
+                vim.notify("Typst watch started", vim.log.levels.INFO, { title = "Typst" })
+              else
+                vim.notify("Typst watch stopped", vim.log.levels.INFO, { title = "Typst" })
+              end
+            end
+
+            vim.keymap.set("n", "<f2>", toggle_watch_typst, { noremap = true, silent = true, buffer = true })
+          end,
+        },
+        {
+          event = "BufWritePost",
+          pattern = "*.typ",
+          desc = "Watch typst",
+          callback = function()
+            if not vim.b.watch_typst then return end
+            local file = vim.fn.expand "%:p"
+            local dir = vim.fn.expand "%:p:h"
+            local cmd = string.format('typst compile "%s" %s/notes.pdf', file, dir)
+            vim.fn.jobstart(cmd, {
+              on_exit = function(_, exit_code)
+                if exit_code == 0 then
+                  vim.notify("Typst compilation successful", vim.log.levels.INFO, { title = "Typst" })
+                else
+                  vim.notify("Typst compilation failed", vim.log.levels.ERROR, { title = "Typst" })
+                end
+              end,
+            })
+          end,
+        },
+      },
+      c_settings = {
+        {
+          event = "BufEnter",
+          pattern = "*.c",
+          desc = "c settings",
+          callback = function()
+            local Terminal = require("toggleterm.terminal").Terminal
+
+            -- Function to compile and run the current C file
+            local function run_c_file()
+              local file_path = vim.fn.expand "%:p" -- Get the full path of the current file
+              local file_name = vim.fn.expand "%:t:r" -- Get the file name without extension
+              local compile_cmd = string.format("gcc %s -o %s; ./%s", file_path, file_name, file_name)
+
+              local c_terminal = Terminal:new {
+                cmd = compile_cmd, -- Command to compile and run the C file
+                direction = "float", -- Open in a floating terminal
+                close_on_exit = false, -- Keep the terminal open after execution
+              }
+              c_terminal:toggle()
+            end
+
+            -- Map <F5> to compile and run the C file
+            vim.keymap.set("n", "<f2>", run_c_file, { noremap = true, silent = true })
+          end,
+        },
+      },
+      rmd_settings = {
+        {
+          event = "BufEnter",
+          pattern = "*.rmd",
+          desc = "rmd settings",
+          callback = function()
+            local compile_rmd = function()
+              local command = "R -e \"rmarkdown::render('" .. vim.fn.expand "%" .. "')\""
+              local handle = io.popen(command)
+              local output = handle:read "*a"
+              handle:close()
+              vim.notify(output, vim.log.levels.INFO, { title = "Rmd Compilation" })
+            end
+            vim.keymap.set("n", "<f3>", compile_rmd, { noremap = true, silent = false, buffer = true })
+          end,
+        },
+      },
       markdown_settings = {
         {
           event = "BufEnter",
@@ -159,5 +245,6 @@ return {
           end,
         },
       },
+    },
   },
 }
