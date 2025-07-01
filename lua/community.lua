@@ -12,9 +12,9 @@ return {
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.syntax.hlargs-nvim" },
   { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
+  { import = "astrocommunity.recipes.vscode-icons" },
 
   -- Languages
-  -- Coding
   -- -- Coding
   { import = "astrocommunity.pack.python" },
   { import = "astrocommunity.pack.java" },
@@ -23,9 +23,9 @@ return {
   { import = "astrocommunity.pack.typescript" },
   { import = "astrocommunity.pack.cpp" },
   { import = "astrocommunity.pack.laravel" },
+  { import = "astrocommunity.pack.blade" },
+  { import = "astrocommunity.pack.php" },
   -- { import = "astrocommunity.pack.dart" },
-  -- { import = "astrocommunity.pack.php" },
-  -- Notes
   -- -- Notes
   { import = "astrocommunity.pack.typst" },
   { import = "astrocommunity.markdown-and-latex.peek-nvim" },
@@ -35,4 +35,20 @@ return {
   -- { import = "astrocommunity.code-runner.molten-nvim" },
   -- { import = "astrocommunity.code-runner.executor-nvim" },
   -- { import = "astrocommunity.code-runner.sniprun" }, -- in ./plugins/sniprun.lua
+
+  -- Completion
+  { import = "astrocommunity.completion.blink-cmp" },
+
+  -- -- Copilot
+  { import = "astrocommunity.completion.copilot-lua" },
+  { import = "astrocommunity.completion.copilot-cmp" },
+  -- { import = "astrocommunity.completion.copilot-lua-cmp" },
+
+  -- Comment
+  { import = "astrocommunity.comment.ts-comments-nvim" },
+
+  -- Utils
+  { import = "astrocommunity.motion.nvim-surround" },
+  { import = "astrocommunity.editing-support.neogen" },
+  { import = "astrocommunity.recipes.neovide" },
 }
