@@ -45,7 +45,6 @@ return {
       },
     },
     -- Mappings can be configured through AstroCore as well.
-    -- NOTE: keycodes follow the casing in the vimdocs. For example, `<Leader>` must be capitalized
     mappings = {
       -- first key is the mode
       n = {
@@ -71,6 +70,8 @@ return {
           end,
           desc = "Close buffer from tabline",
         },
+
+        ["<C-n>"] = { "<Cmd>Neotree toggle<CR>", desc = "Toggle Neotree" },
 
         ["<C-_>"] = { "<Cmd>normal gcc<CR>", desc = "Toggle Comment" },
         ["<C-/>"] = { "<Cmd>normal gcc<CR>", desc = "Toggle Comment" },
@@ -116,11 +117,21 @@ return {
         -- Line Swapping
         ["<A-j>"] = { "<Esc><cmd>m .+1<CR>==gi" },
         ["<A-k>"] = { "<Esc><cmd>m .-2<CR>==gi" },
+
+        -- Better escape
+        ["<C-c>"] = { "<Esc>" },
+
+        ["<C-s>"] = { "<Esc><cmd>silent! update! | redraw<CR>" },
       },
       v = {
         -- Line Swapping
         ["<A-k>"] = { ":m '<-2<CR><CR>gv=gv" },
         ["<A-j>"] = { ":m '>+1<CR><CR>gv=gv" },
+
+        ["<C-_>"] = { "<Cmd>normal gcc<CR>", desc = "Toggle Comment" },
+        ["<C-/>"] = { "<Cmd>normal gcc<CR>", desc = "Toggle Comment" },
+
+        ["<C-c>"] = { "<Esc>" },
       },
     },
       markdown_settings = {
