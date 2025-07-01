@@ -110,4 +110,55 @@ return {
       }
     end,
   },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    -- overrides `require("mason-tool-installer").setup(...)`
+    opts = {
+      -- Make sure to use the names found in `:Mason`
+      ensure_installed = {
+        -- install language servers
+        "lua-language-server",
+
+        -- install formatters
+        "stylua",
+
+        -- install debuggers
+        "debugpy",
+
+        -- install any other package
+        "tree-sitter-cli",
+      },
+    },
+  },
+  {
+    "nvimtools/none-ls.nvim",
+    opts = function(_, opts)
+      -- opts variable is the default configuration table for the setup function call
+      local null_ls = require "null-ls"
+
+      -- Check supported formatters and linters
+      -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/formatting
+      -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
+
+      -- Only insert new sources, do not replace the existing ones
+      -- (If you wish to replace, use `opts.sources = {}` instead of the `list_insert_unique` function)
+      opts.sources = require("astrocore").list_insert_unique(opts.sources, {
+        -- Set a formatter
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.formatting.prettier,
+        null_ls.builtins.formatting.typstyle,
+      })
+    end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = {
+        "lua",
+        "vim",
+        -- add more arguments for adding more treesitter parsers
+      },
+    },
+  },
+  -- { "nvim-telescope/telescope.nvim" },
 }
